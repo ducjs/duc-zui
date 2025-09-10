@@ -2,6 +2,7 @@
 <html lang="vi">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Portraits Collection #6</title>
   <style>
     body {
@@ -71,7 +72,83 @@
       pointer-events: none;
     }
     #addr {
-      width: 80%;
+      width: 100%;
+    }
+    
+    /* Tablet styles */
+    @media screen and (max-width: 768px) {
+      body {
+        padding: 20px;
+      }
+      .card {
+        max-width: 90%;
+        padding: 20px;
+        border-radius: 12px;
+      }
+      h1 {
+        font-size: 24px;
+        letter-spacing: 0.5px;
+      }
+      .edit-btn {
+        top: 15px;
+        right: 15px;
+        padding: 10px 16px;
+        font-size: 13px;
+      }
+      .editable-input, .readonly-text {
+        font-size: 14px;
+      }
+      #addr {
+        width: 100%;
+      }
+    }
+    
+    /* Mobile styles */
+    @media screen and (max-width: 480px) {
+      body {
+        padding: 10px;
+      }
+      .card {
+        max-width: 100%;
+        padding: 15px;
+        border-radius: 8px;
+        margin: 10px 0;
+      }
+      h1 {
+        font-size: 20px;
+        letter-spacing: 0px;
+        margin-bottom: 15px;
+      }
+      .edit-btn {
+        position: static;
+        display: block;
+        margin: 0 0 15px auto;
+        padding: 10px 16px;
+        font-size: 14px;
+        width: fit-content;
+      }
+      .info p {
+        margin: 8px 0;
+        font-size: 14px;
+      }
+      .highlight {
+        display: block;
+        margin-bottom: 2px;
+      }
+      .editable-input, .readonly-text {
+        width: 100%;
+        min-width: unset;
+        margin-top: 2px;
+        padding: 8px;
+        font-size: 14px;
+        box-sizing: border-box;
+      }
+      .editable-input {
+        border-radius: 6px;
+      }
+      #addr {
+        width: 100%;
+      }
     }
   </style>
 </head>
@@ -86,25 +163,54 @@
       <p><span class="highlight">Ngày giờ:</span> <input type="text" class="readonly-text" value="18/09/2025 - 09h" readonly></p>
       <p><span class="highlight">Địa điểm:</span> <input id="addr" type="text" class="readonly-text" value="Kỳ Anh Studio / Lầu 2 - 307/1A Nguyễn Văn Trỗi, phường 1, Q. Tân Bình, Hồ Chí Minh" readonly></p>
       <p><span class="highlight">Sđt:</span> <input type="text" class="readonly-text" value="07.6535.6526" readonly></p>
-      <br>
-      <p><span class="highlight">Gói chụp:</span></p>
-      <p>Đã cọc: <input type="text" class="readonly-text" value="" readonly></p>
-      <p>Còn lại: <input type="text" class="readonly-text" value="" readonly></p>
+      <!-- <br> -->
+      <p><span class="highlight">Gói chụp:</span> <input type="text" class="readonly-text" value="iPhone 17 Pro VIP" readonly></p>
+      💵💸🤑💰💲
+      <p class="highlight">Đã cọc: <input type="text" class="readonly-text money-input" value="1.000" readonly></p>
+      <p class="highlight">Còn lại: <input type="text" class="readonly-text money-input" value="10.000.000" readonly></p>
     </div>
   </div>
   
   <script>
     let isEditing = false;
     
+    function autoResize(textarea) {
+      textarea.style.height = 'auto';
+      textarea.style.height = textarea.scrollHeight + 'px';
+    }
+    
+    function formatMoney(value) {
+      // Remove all non-digits
+      const numericValue = value.replace(/\D/g, '');
+      // Add thousand separators with dots
+      return numericValue.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+    }
+    
+    function handleMoneyInput(input) {
+      const cursorPos = input.selectionStart;
+      const oldLength = input.value.length;
+      input.value = formatMoney(input.value);
+      const newLength = input.value.length;
+      // Adjust cursor position after formatting
+      input.setSelectionRange(cursorPos + (newLength - oldLength), cursorPos + (newLength - oldLength));
+    }
+    
     function toggleEdit() {
       const button = document.querySelector('.edit-btn');
-      const inputs = document.querySelectorAll('input[type="text"]');
+      const inputs = document.querySelectorAll('input[type="text"], textarea');
       
       if (!isEditing) {
         // Enable edit mode
         inputs.forEach(input => {
           input.readOnly = false;
-          input.className = 'editable-input';
+          input.className = input.classList.contains('money-input') ? 'editable-input money-input' : 'editable-input';
+          if (input.tagName === 'TEXTAREA') {
+            autoResize(input);
+            input.addEventListener('input', () => autoResize(input));
+          }
+          if (input.classList.contains('money-input')) {
+            input.addEventListener('input', () => handleMoneyInput(input));
+          }
         });
         button.textContent = 'Save';
         isEditing = true;
@@ -112,12 +218,23 @@
         // Disable edit mode
         inputs.forEach(input => {
           input.readOnly = true;
-          input.className = 'readonly-text';
+          input.className = input.classList.contains('money-input') ? 'readonly-text money-input' : 'readonly-text';
+          if (input.tagName === 'TEXTAREA') {
+            autoResize(input);
+          }
         });
         button.textContent = 'Edit';
         isEditing = false;
       }
     }
+    
+    // Auto-resize on page load
+    document.addEventListener('DOMContentLoaded', function() {
+      const addr = document.getElementById('addr');
+      if (addr && addr.tagName === 'TEXTAREA') {
+        autoResize(addr);
+      }
+    });
   </script>
 </body>
 </html>
