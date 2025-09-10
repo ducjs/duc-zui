@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Portraits Collection #6</title>
+  <style>
+    body {
+      font-family: 'Georgia', serif;
+      background: url('https://cdn-new.topcv.vn/unsafe/https://static.topcv.vn/company_covers/GoSqZ35PHN2oNYKHMeoZ.jpg') center/cover no-repeat;
+      background-attachment: fixed;
+      margin: 0;
+      padding: 30px;
+      color: #333;
+    }
+    .card {
+      max-width: 800px;
+      margin: auto;
+      background: linear-gradient(rgba(255,255,255,0.9), rgba(255,255,255,0.9)), url('https://images7.alphacoders.com/346/346059.jpg');
+      background-size: cover;
+      background-position: center;
+      border-radius: 16px;
+      padding: 30px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      line-height: 1.6;
+    }
+    h1 {
+      text-align: center;
+      font-size: 28px;
+      letter-spacing: 1px;
+      margin-bottom: 20px;
+    }
+    .info p {
+      margin: 6px 0;
+    }
+    .highlight {
+      font-weight: bold;
+      color: #000;
+    }
+    .edit-btn {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: #007bff;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      padding: 12px 20px;
+      cursor: pointer;
+      font-size: 14px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+      z-index: 1000;
+    }
+    .edit-btn:hover {
+      background: #0056b3;
+    }
+    .editable-input {
+      background: rgba(255,255,255,0.8);
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      padding: 2px 6px;
+      font-family: inherit;
+      font-size: inherit;
+      width: auto;
+      min-width: 200px;
+    }
+    .readonly-text {
+      background: transparent;
+      border: none;
+      font-family: inherit;
+      font-size: inherit;
+      pointer-events: none;
+    }
+    #addr {
+      width: 80%;
+    }
+  </style>
+</head>
+<body>
+  <button class="edit-btn" onclick="toggleEdit()">Edit</button>
+  <div class="card">
+    <h1>𝑷𝒐𝒓𝒕𝒓𝒂𝒊𝒕𝒔 𝑪𝒐𝒍𝒍𝒆𝒄𝒕𝒊𝒐𝒏 #6</h1>
+    <div class="info">
+      <p><span class="highlight">Trang phục:</span> <input type="text" class="readonly-text" value="như concept mẫu" readonly></p>
+      <p><span class="highlight">Makeup:</span> <input type="text" class="readonly-text" value="như concept mẫu" readonly></p>
+      <p><span class="highlight">Hair:</span> <input type="text" class="readonly-text" value="khách chọn sau" readonly></p>
+      <p><span class="highlight">Ngày giờ:</span> <input type="text" class="readonly-text" value="18/09/2025 - 09h" readonly></p>
+      <p><span class="highlight">Địa điểm:</span> <input id="addr" type="text" class="readonly-text" value="Kỳ Anh Studio / Lầu 2 - 307/1A Nguyễn Văn Trỗi, phường 1, Q. Tân Bình, Hồ Chí Minh" readonly></p>
+      <p><span class="highlight">Sđt:</span> <input type="text" class="readonly-text" value="07.6535.6526" readonly></p>
+      <br>
+      <p><span class="highlight">Gói chụp:</span></p>
+      <p>Đã cọc: <input type="text" class="readonly-text" value="" readonly></p>
+      <p>Còn lại: <input type="text" class="readonly-text" value="" readonly></p>
+    </div>
+  </div>
+  
+  <script>
+    let isEditing = false;
+    
+    function toggleEdit() {
+      const button = document.querySelector('.edit-btn');
+      const inputs = document.querySelectorAll('input[type="text"]');
+      
+      if (!isEditing) {
+        // Enable edit mode
+        inputs.forEach(input => {
+          input.readOnly = false;
+          input.className = 'editable-input';
+        });
+        button.textContent = 'Save';
+        isEditing = true;
+      } else {
+        // Disable edit mode
+        inputs.forEach(input => {
+          input.readOnly = true;
+          input.className = 'readonly-text';
+        });
+        button.textContent = 'Edit';
+        isEditing = false;
+      }
+    }
+  </script>
+</body>
+</html>
