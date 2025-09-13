@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="vi">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,49 +14,37 @@
       padding: 30px;
       color: #333;
     }
+
     .card {
       max-width: 800px;
       margin: auto;
-      background: linear-gradient(rgba(255,255,255,0.9), rgba(255,255,255,0.9)), url('https://images7.alphacoders.com/346/346059.jpg');
+      background: linear-gradient(rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.9)), url('https://images7.alphacoders.com/346/346059.jpg');
       background-size: cover;
       background-position: center;
       border-radius: 16px;
       padding: 30px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
       line-height: 1.6;
     }
+
     h1 {
       text-align: center;
       font-size: 28px;
       letter-spacing: 1px;
       margin-bottom: 20px;
     }
+
     .info p {
       margin: 6px 0;
     }
+
     .highlight {
       font-weight: bold;
       color: #000;
     }
-    .edit-btn {
-      position: fixed;
-      top: 20px;
-      right: 20px;
-      background: #007bff;
-      color: white;
-      border: none;
-      border-radius: 8px;
-      padding: 12px 20px;
-      cursor: pointer;
-      font-size: 14px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-      z-index: 1000;
-    }
-    .edit-btn:hover {
-      background: #0056b3;
-    }
-    .editable-input {
-      background: rgba(255,255,255,0.8);
+
+    .editable-p {
+      background: rgba(255, 255, 255, 0.8);
       border: 1px solid #ddd;
       border-radius: 4px;
       padding: 2px 6px;
@@ -64,177 +53,208 @@
       width: auto;
       min-width: 200px;
     }
-    .readonly-text {
-      background: transparent;
-      border: none;
-      font-family: inherit;
-      font-size: inherit;
-      pointer-events: none;
-    }
+
     #addr {
       width: 100%;
     }
-    
+
     /* Tablet styles */
     @media screen and (max-width: 768px) {
       body {
         padding: 20px;
       }
+
       .card {
         max-width: 90%;
         padding: 20px;
         border-radius: 12px;
       }
+
       h1 {
         font-size: 24px;
         letter-spacing: 0.5px;
       }
-      .edit-btn {
-        top: 15px;
-        right: 15px;
-        padding: 10px 16px;
-        font-size: 13px;
-      }
-      .editable-input, .readonly-text {
+
+      .editable-p {
         font-size: 14px;
       }
+
       #addr {
         width: 100%;
       }
     }
-    
+
     /* Mobile styles */
     @media screen and (max-width: 480px) {
       body {
         padding: 10px;
       }
+
       .card {
         max-width: 100%;
         padding: 15px;
         border-radius: 8px;
         margin: 10px 0;
       }
+
       h1 {
         font-size: 20px;
-        letter-spacing: 0px;
         margin-bottom: 15px;
       }
-      .edit-btn {
-        position: static;
-        display: block;
-        margin: 0 0 15px auto;
-        padding: 10px 16px;
-        font-size: 14px;
-        width: fit-content;
-      }
+
       .info p {
         margin: 8px 0;
         font-size: 14px;
       }
+
       .highlight {
         display: block;
         margin-bottom: 2px;
       }
-      .editable-input, .readonly-text {
+
+      .editable-p {
         width: 100%;
         min-width: unset;
         margin-top: 2px;
         padding: 8px;
         font-size: 14px;
         box-sizing: border-box;
-      }
-      .editable-input {
         border-radius: 6px;
       }
+
       #addr {
         width: 100%;
       }
     }
   </style>
+
+  <style>
+    .spinner {
+      border: 6px solid #f3f3f3;
+      /* màu nền nhạt */
+      border-top: 6px solid #007bff;
+      /* màu xoay */
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      animation: spin 1s linear infinite;
+      margin: auto;
+    }
+
+    @keyframes spin {
+      0% {
+        transform: rotate(0deg);
+      }
+
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+  </style>
+
 </head>
+
 <body>
-  <button class="edit-btn" onclick="toggleEdit()">Edit</button>
   <div class="card">
-    <h1>𝑷𝒐𝒓𝒕𝒓𝒂𝒊𝒕𝒔 𝑪𝒐𝒍𝒍𝒆𝒄𝒕𝒊𝒐𝒏 #6</h1>
+    <h1 id="title">Hế nhô
+      <div id="loading">
+        <div class="spinner"></div>
+      </div>
+
+    </h1>
+
+
     <div class="info">
-      <p><span class="highlight">Trang phục:</span> <input type="text" class="readonly-text" value="như concept mẫu" readonly></p>
-      <p><span class="highlight">Makeup:</span> <input type="text" class="readonly-text" value="như concept mẫu" readonly></p>
-      <p><span class="highlight">Hair:</span> <input type="text" class="readonly-text" value="khách chọn sau" readonly></p>
-      <p><span class="highlight">Ngày giờ:</span> <input type="text" class="readonly-text" value="18/09/2025 - 09h" readonly></p>
-      <p><span class="highlight">Địa điểm:</span> <input id="addr" type="text" class="readonly-text" value="Kỳ Anh Studio / Lầu 2 - 307/1A Nguyễn Văn Trỗi, phường 1, Q. Tân Bình, Hồ Chí Minh" readonly></p>
-      <p><span class="highlight">Sđt:</span> <input type="text" class="readonly-text" value="07.6535.6526" readonly></p>
+      <p>
+        <span class="highlight">Trang phục:</span>
+        <span class="ka-value" id="clothes"></span>
+      </p>
+      <p>
+        <span class="highlight">Makeup:</span>
+        <span class="ka-value" id="makeup"></span>
+      </p>
+      <p><span class="highlight">Hair:</span>
+        <span class="ka-value" id="hair"></span>
+      </p>
+      <p>
+        <span class="highlight">Ngày giờ:</span>
+        <span class="ka-value" id="datetime"></span>
+      </p>
+      <p>
+        <span class="highlight">Địa điểm:</span>
+        <span class="ka-value" id="addr"></span>
+      </p>
+      <p>
+        <span class="highlight">Sđt:</span>
+        <span class="ka-value" id="phone"></span>
+
+      </p>
       <!-- <br> -->
-      <p><span class="highlight">Gói chụp:</span> <input type="text" class="readonly-text" value="iPhone 17 Pro VIP" readonly></p>
+      <p>
+        <span class="highlight">Gói chụp:</span>
+        <span class="ka-value" id="package"></span>
+      </p>
+
       💵💸🤑💰💲
-      <p class="highlight">Đã cọc: <input type="text" class="readonly-text money-input" value="1.000" readonly></p>
-      <p class="highlight">Còn lại: <input type="text" class="readonly-text money-input" value="10.000.000" readonly></p>
+
+      <p>
+        <span class="highlight">Đã cọc:</span>
+        <span class="ka-value" id="paid"></span>
+      </p>
+      <p>
+        <span class="highlight">Còn lại:</span>
+        <span class="ka-value" id="remain"></span>
+      </p>
     </div>
   </div>
-  
+
   <script>
-    let isEditing = false;
-    
-    function autoResize(textarea) {
-      textarea.style.height = 'auto';
-      textarea.style.height = textarea.scrollHeight + 'px';
-    }
-    
-    function formatMoney(value) {
-      // Remove all non-digits
-      const numericValue = value.replace(/\D/g, '');
-      // Add thousand separators with dots
-      return numericValue.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
-    }
-    
-    function handleMoneyInput(input) {
-      const cursorPos = input.selectionStart;
-      const oldLength = input.value.length;
-      input.value = formatMoney(input.value);
-      const newLength = input.value.length;
-      // Adjust cursor position after formatting
-      input.setSelectionRange(cursorPos + (newLength - oldLength), cursorPos + (newLength - oldLength));
-    }
-    
-    function toggleEdit() {
-      const button = document.querySelector('.edit-btn');
-      const inputs = document.querySelectorAll('input[type="text"], textarea');
-      
-      if (!isEditing) {
-        // Enable edit mode
-        inputs.forEach(input => {
-          input.readOnly = false;
-          input.className = input.classList.contains('money-input') ? 'editable-input money-input' : 'editable-input';
-          if (input.tagName === 'TEXTAREA') {
-            autoResize(input);
-            input.addEventListener('input', () => autoResize(input));
-          }
-          if (input.classList.contains('money-input')) {
-            input.addEventListener('input', () => handleMoneyInput(input));
-          }
-        });
-        button.textContent = 'Save';
-        isEditing = true;
-      } else {
-        // Disable edit mode
-        inputs.forEach(input => {
-          input.readOnly = true;
-          input.className = input.classList.contains('money-input') ? 'readonly-text money-input' : 'readonly-text';
-          if (input.tagName === 'TEXTAREA') {
-            autoResize(input);
-          }
-        });
-        button.textContent = 'Edit';
-        isEditing = false;
+    function handleResponse(res) {
+      console.log("🚀 ~ handleResponse ~ res:", res);
+      document.getElementById("loading").style.display = "none";
+
+      let { code, data } = res;
+      if (code === 200) {
+        let { link, title, clothes, makeup, hair, datetime, addr: addr, phone, package, paid, remain } = data;
+        document.getElementById("title").innerText = title || "Hế nhô";
+        document.getElementById("clothes").innerText = clothes || "như concept mẫu";
+        document.getElementById("makeup").innerText = makeup || "như concept mẫu";
+        document.getElementById("hair").innerText = hair || "khách chọn sau";
+        document.getElementById("datetime").innerText = datetime || "18/09/2025 - 09h";
+        document.getElementById("addr").innerText = addr || "Kỳ Anh Studio / Lầu 2 - 307/1A Nguyễn Văn Trỗi, phường 1, Q. Tân Bình, Hồ Chí Minh";
+        document.getElementById("phone").innerText = phone || "07.6535.6526";
+        document.getElementById("package").innerText = package || "iPhone 17 Pro VIP";
+        document.getElementById("paid").innerText = paid || "1.000";
+        document.getElementById("remain").innerText = remain || "10.000.000";
+      } else if (code === 404) {
+        document.getElementById("title").innerText = "Chưa tìm thấy thông tin, book chụp đi fen";
       }
     }
-    
-    // Auto-resize on page load
-    document.addEventListener('DOMContentLoaded', function() {
-      const addr = document.getElementById('addr');
-      if (addr && addr.tagName === 'TEXTAREA') {
-        autoResize(addr);
-      }
-    });
   </script>
+
+
+  <script>
+    // Lấy query param "key" từ URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const key = urlParams.get("key");
+
+    // Tạo thẻ script động, append key + callback
+    if (key) {
+      const script = document.createElement("script");
+      script.src = "https://script.google.com/macros/s/AKfycbzGBi6gOLhEkDgxStW1hNVL7Ledc5R4CJdAWSz3QHY6SsR9z2eHz92cvspX7i1iVX9L/exec"
+        + "?key=" + encodeURIComponent(key)
+        + "&callback=handleResponse";
+      document.body.appendChild(script);
+    } else {
+      document.getElementById("title").innerText = "❌ Thiếu key";
+      document.getElementById("loading").style.display = "none";
+    }
+  </script>
+
+  <!-- <script
+    src="https://script.google.com/macros/s/AKfycbzGBi6gOLhEkDgxStW1hNVL7Ledc5R4CJdAWSz3QHY6SsR9z2eHz92cvspX7i1iVX9L/exec"></script> -->
+
+
 </body>
+
 </html>
